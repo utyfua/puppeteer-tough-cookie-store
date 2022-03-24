@@ -1,0 +1,59 @@
+{
+  "name": "puppeteer-tough-cookie-store",
+  "version": "1.0.0",
+  "description": "Puppeteer cookie store implementation for tough-cookie",
+  "repository": "utyfua/puppeteer-tough-cookie-store",
+  "typings": "dist/index.d.ts",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.esm.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "clean": "rimraf dist/*",
+    "prebuild": "run-s clean",
+    "build": "run-s build:tsc build:rollup ",
+    "build:tsc": "tsc --module commonjs",
+    "build:rollup": "rollup -c rollup.config.ts",
+    "docs": "documentation readme src/index.ts --quiet --github --section API --parse-extension=ts --require-extension=.ts",
+    "test:js": "jest -c jest.config.js",
+    "test:server": "node ./testServer",
+    "test": "run-s build test:js"
+  },
+  "keywords": [
+    "puppeteer",
+    "cookie",
+    "cookies",
+    "jar",
+    "cookiejar",
+    "cookie store",
+    "tough-cookie",
+    "tough-cookie store",
+    "tough",
+    "store"
+  ],
+  "author": "Utyfua",
+  "license": "MIT",
+  "dependencies": {
+    "tough-cookie": "*"
+  },
+  "peerDependencies": {
+    "tough-cookie": "*"
+  },
+  "devDependencies": {
+    "@babel/preset-typescript": "^7.15.0",
+    "@types/tough-cookie": "^4.0.1",
+    "copyfiles": "^2.4.1",
+    "documentation": "^13.2.5",
+    "npm-run-all": "^4.1.5",
+    "puppeteer": "^13.0.1",
+    "rimraf": "^3.0.2",
+    "rollup": "^2.58.0",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-sourcemaps": "^0.6.3",
+    "rollup-plugin-typescript2": "^0.30.0",
+    "ts-node": "^10.4.0",
+    "typescript": "^4.4.4"
+  }
+}
