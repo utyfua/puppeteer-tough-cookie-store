@@ -12,10 +12,10 @@
   "scripts": {
     "clean": "rimraf dist/*",
     "prebuild": "run-s clean",
-    "build": "run-s build:tsc build:rollup ",
+    "build": "run-s build:tsc build:rollup docs",
     "build:tsc": "tsc --module commonjs",
     "build:rollup": "rollup -c rollup.config.ts",
-    "docs": "typedoc src/index.ts --readme README.md  --theme github-wiki",
+    "docs": "typedoc src/* --cleanOutputDir --name \"Puppeteer cookie store implementation for tough-cookie\"",
     "test:js": "jest -c jest.config.js",
     "test:server": "node ./testServer",
     "test": "run-s build test:js"
@@ -36,11 +36,11 @@
   "license": "MIT",
   "dependencies": {
     "tough-cookie": "*",
-    "typedoc-github-wiki-theme": "^1.0.0",
-    "typedoc-plugin-markdown": "^3.11.14"
+    "universalify": "*"
   },
   "peerDependencies": {
-    "tough-cookie": "*"
+    "tough-cookie": "*",
+    "universalify": "*"
   },
   "devDependencies": {
     "@babel/preset-typescript": "^7.15.0",

@@ -1,18 +1,49 @@
-import { Cookie } from 'tough-cookie'
+import type { Cookie } from 'tough-cookie'
 import type { CDPSession, Protocol } from 'puppeteer'
 
-import { deserialize, serialize } from './utils'
+// @ts-ignore
+import { fromPromise } from 'universalify'
 
-export interface Options {
+import { serializeForTough, serializeForPuppeteer } from './utils'
+
+/**
+ * Options for [PuppeteerToughCookieStore](../classes/PuppeteerToughCookieStore.html)
+ */
+export interface StoreOptions {
+    /**
+     * Changed getAllCookies behavior
+     */
     getAllCookiesUrls?: string[],
+
+    /**
+     * Fix `Cannot delete property 'creationIndex' of [object Object]` inside tough-cookie package
+     * 
+     * [closed issue #1](https://github.com/salesforce/tough-cookie/issues/192) |
+     * [issue #2](https://github.com/salesforce/tough-cookie/issues/199)
+     * 
+     * `getAllCookies` will call `.toJSON` before return cookies
+     * 
+     * BE CAREFUL: TYPES WILL LIE TO YOU
+     * 
+     * @deprecated
+     */
+    _getAllCookies_returnPlainObject?: boolean,
 }
 
 /**
  * @class PuppeteerToughCookieStore
  */
 export class PuppeteerToughCookieStore {
-    synchronous = false;
-    constructor(public client: CDPSession, public options: Options = {}) {
+    /**
+     * Current store driver works async only
+     */
+    protected synchronous = false;
+
+    constructor(
+        /** @internal */
+        private client: CDPSession,
+        /** @internal */
+        private options: StoreOptions = {}) {
 
     }
 
@@ -35,7 +66,7 @@ export class PuppeteerToughCookieStore {
     async findCookie(domain: string, path: string, key: string): Promise<Cookie | null> {
         const cookies = await this.findCdpCookies(domain, path);
         const cookie = cookies.find(({ name }) => name === key);
-        return cookie ? deserialize(cookie) : null;
+        return cookie ? serializeForTough(cookie) : null;
     };
 
     /**
@@ -44,14 +75,14 @@ export class PuppeteerToughCookieStore {
     async findCookies(domain: string, path?: string, allowSpecialUseDomain?: boolean):
         Promise<Cookie[]> {
         const cookies = await this.findCdpCookies(domain, path, allowSpecialUseDomain);
-        return cookies.map(deserialize)
+        return cookies.map(serializeForTough)
     };
 
     /**
      * Sets a cookie with the given cookie data; may overwrite equivalent cookies if they exist.
      */
     async putCookie(cookie: Cookie): Promise<void> {
-        await this.client.send("Network.setCookie", serialize(cookie))
+        await this.client.send("Network.setCookie", serializeForPuppeteer(cookie))
     };
 
     /**
@@ -59,7 +90,7 @@ export class PuppeteerToughCookieStore {
      */
     async putCookies(cookies: Cookie[]): Promise<void> {
         await this.client.send("Network.setCookies", {
-            cookies: cookies.map(serialize)
+            cookies: cookies.map(serializeForPuppeteer)
         })
     };
 
@@ -105,7 +136,13 @@ export class PuppeteerToughCookieStore {
                     urls: this.options.getAllCookiesUrls
                 }) :
                 await this.client.send("Network.getAllCookies")
-        return cookies.map(deserialize);
+
+        if (this.options._getAllCookies_returnPlainObject) {
+            // @ts-ignore: i understand that its bad, but user were warned
+            return cookies.map(serializeForTough).map(cookie => cookie.toJSON());
+        }
+
+        return cookies.map(serializeForTough);
     };
 
     /**
@@ -115,4 +152,24 @@ export class PuppeteerToughCookieStore {
         await this.client.send("Network.clearBrowserCookies")
     };
 }
+
+
+// todo: fix types
+[
+    'findCookie',
+    'findCookies',
+    'getAllCookies',
+    'putCookie',
+    'putCookies',
+    'removeAllCookies',
+    'removeCookie',
+    'removeCookies',
+    'updateCookie'
+].forEach(name => {
+    // @ts-ignore
+    PuppeteerToughCookieStore.prototype[name] = fromPromise(
+        // @ts-ignore
+        PuppeteerToughCookieStore.prototype[name]
+    )
+})
 

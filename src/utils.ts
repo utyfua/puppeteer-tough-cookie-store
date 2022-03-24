@@ -38,10 +38,11 @@ export const t2pSameSite = (sameSite?: Cookie.Properties["sameSite"]): Protocol.
 /**
  * convert puppeteer's cookie to tough-cookie's cookie
  */
-export const deserialize = (cookie: Protocol.Network.Cookie): Cookie => {
+export const serializeForTough = (cookie: Protocol.Network.Cookie): Cookie => {
     return new Cookie({
         key: cookie.name,
         value: cookie.value,
+        // @ts-ignore: Infinity expires: https://github.com/DefinitelyTyped/DefinitelyTyped/pull/59406
         expires: (!cookie.expires || cookie.expires === PuppeteerInfinityExpires) ?
             ToughInfinityExpires :
             new Date(cookie.expires * 1000),
@@ -61,7 +62,7 @@ export const deserialize = (cookie: Protocol.Network.Cookie): Cookie => {
 /**
  * convert tough-cookie's cookie to puppeteer's cookie
  */
-export const serialize = (cookie: Cookie): Protocol.Network.SetCookieRequest => {
+export const serializeForPuppeteer = (cookie: Cookie): Protocol.Network.SetCookieRequest => {
     if (!cookie.domain) throw new Error("Unknown domain");
 
     return {

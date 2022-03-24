@@ -2,15 +2,28 @@
 
 Puppeteer store for cookie management library [tough cookie](https://github.com/goinstant/tough-cookie "tough cookie").
 
+[[Docs website]](https://utyfua.github.io/puppeteer-tough-cookie-store/)
+
 Tested in `puppeteer/chromium` only!
 
-# API
+## Installation
 
-# TODO:
+```
+npm install puppeteer-tough-cookie-store
+```
 
-*   add tests
-*   documentation
+or
 
-# License
+```
+yarn add puppeteer-tough-cookie-store
+```
+
+## TODO:
+
+-   fix `PuppeteerToughCookieStore` types
+-   add tests
+-   documentation
+
+## License
 
 Copyright © 2022, Utyfua. Released under the MIT License.
