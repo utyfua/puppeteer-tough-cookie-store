@@ -55,7 +55,7 @@ export class PuppeteerToughCookieStore {
     async findCdpCookies(domain: string, path?: string, allowSpecialUseDomain?: boolean):
         Promise<Protocol.Network.Cookie[]> {
         const { cookies } = await this.client.send("Network.getCookies", {
-            urls: ['//' + domain + (path || '')]
+            urls: ['https://' + domain + (path || '')]
         })
         return cookies;
     }

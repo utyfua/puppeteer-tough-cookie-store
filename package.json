@@ -1,6 +1,6 @@
 {
   "name": "puppeteer-tough-cookie-store",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Puppeteer cookie store implementation for tough-cookie",
   "repository": "utyfua/puppeteer-tough-cookie-store",
   "typings": "dist/index.d.ts",
@@ -34,10 +34,6 @@
   ],
   "author": "Utyfua",
   "license": "MIT",
-  "dependencies": {
-    "tough-cookie": "*",
-    "universalify": "*"
-  },
   "peerDependencies": {
     "tough-cookie": "*",
     "universalify": "*"
