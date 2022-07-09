@@ -42,6 +42,7 @@
     "@babel/preset-typescript": "^7.15.0",
     "@types/tough-cookie": "^4.0.1",
     "copyfiles": "^2.4.1",
+    "got": "^11.8.5",
     "npm-run-all": "^4.1.5",
     "puppeteer": "^13.0.1",
     "rimraf": "^3.0.2",
@@ -50,8 +51,12 @@
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-sourcemaps": "^0.6.3",
     "rollup-plugin-typescript2": "^0.30.0",
+    "tough-cookie": "^4.0.0",
     "ts-node": "^10.4.0",
-    "typedoc": "^0.22.13",
-    "typescript": "^4.4.4"
+    "typedoc": "^0.23.6",
+    "typescript": "^4.7.4"
+  },
+  "dependencies": {
+    "universalify": "^2.0.0"
   }
 }

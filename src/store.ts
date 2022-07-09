@@ -41,9 +41,9 @@ export class PuppeteerToughCookieStore {
 
     constructor(
         /** @internal */
-        private client: CDPSession,
+        public client: CDPSession,
         /** @internal */
-        private options: StoreOptions = {}) {
+        public options: StoreOptions = {}) {
 
     }
 
