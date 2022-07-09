@@ -1,0 +1,25 @@
+name: Generate docs on merge on merge
+"on":
+  push:
+    branches:
+      - docs
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - name: 'Install deps'
+        run: yarn
+      - name: 'Generate docs files'
+        run: yarn docs
+      - name: 'Commit docs'
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add .
+          git commit -m "Generate docs"
+          git push
