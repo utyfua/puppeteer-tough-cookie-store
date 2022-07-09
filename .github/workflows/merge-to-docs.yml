@@ -5,7 +5,8 @@ name: Merge master to docs branch
       - master
 
 jobs:
-  build:
+  merge:
+    name: 'Merge master to docs branch'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -13,6 +14,7 @@ jobs:
         run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
+          git fetch
           git checkout docs
           git merge master
           git push
