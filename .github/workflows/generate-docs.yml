@@ -1,4 +1,4 @@
-name: Generate docs on merge on merge
+name: Generate docs on merge
 "on":
   push:
     branches:
