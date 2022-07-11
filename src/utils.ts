@@ -31,50 +31,56 @@ export const t2pSameSite = (sameSite?: Cookie.Properties["sameSite"]): Protocol.
             return 'Strict';
         case 'none':
         default:
-            return 'None';
+            return 'Lax';
     }
 }
 
 /**
  * convert puppeteer's cookie to tough-cookie's cookie
  */
-export const serializeForTough = (cookie: Protocol.Network.Cookie): Cookie => {
-    return new Cookie({
-        key: cookie.name,
-        value: cookie.value,
+export const serializeForTough = (puppetCookie: Protocol.Network.Cookie): Cookie => {
+
+    const toughCookie: Cookie = new Cookie({
+        key: puppetCookie.name,
+        value: puppetCookie.value,
         // @ts-ignore: Infinity expires: https://github.com/DefinitelyTyped/DefinitelyTyped/pull/59406
-        expires: (!cookie.expires || cookie.expires === PuppeteerInfinityExpires) ?
+        expires: (!puppetCookie.expires || puppetCookie.expires === PuppeteerInfinityExpires) ?
             ToughInfinityExpires :
-            new Date(cookie.expires * 1000),
-        domain: canonicalDomain(cookie.domain),
-        path: cookie.path,
-        secure: cookie.secure,
-        httpOnly: cookie.httpOnly,
-        sameSite: p2tSameSite(cookie.sameSite),
-        hostOnly: !cookie.domain.startsWith("."),
+            new Date(puppetCookie.expires * 1000),
+        domain: canonicalDomain(puppetCookie.domain),
+        path: puppetCookie.path,
+        secure: puppetCookie.secure,
+        httpOnly: puppetCookie.httpOnly,
+        sameSite: p2tSameSite(puppetCookie.sameSite),
+        hostOnly: !puppetCookie.domain.startsWith("."),
 
         // can we really skip them?
         // creation: currentDate,
         // lastAccessed: currentDate,
     });
+
+    return toughCookie;
 }
 
 /**
  * convert tough-cookie's cookie to puppeteer's cookie
  */
-export const serializeForPuppeteer = (cookie: Cookie): Protocol.Network.SetCookieRequest => {
-    if (!cookie.domain) throw new Error("Unknown domain");
+export const serializeForPuppeteer = (toughCookie: Cookie): Protocol.Network.SetCookieRequest => {
+    if (!toughCookie.domain) throw new Error("Unknown domain");
 
-    return {
-        name: cookie.key,
-        value: cookie.value,
-        domain: !cookie.hostOnly ? '.' + cookie.domain : cookie.domain,
-        path: cookie.path || '/',
-        expires: !cookie.expires || cookie.expires === ToughInfinityExpires ?
+    const puppetCookie: Protocol.Network.SetCookieRequest = {
+        name: toughCookie.key,
+        value: toughCookie.value,
+        // domain: !cookie.hostOnly ? '.' + cookie.domain : cookie.domain,
+        domain: toughCookie.domain,
+        path: toughCookie.path || '/',
+        expires: !toughCookie.expires || toughCookie.expires === ToughInfinityExpires ?
             PuppeteerInfinityExpires :
-            cookie.expires.getTime(),
-        secure: cookie.secure,
-        httpOnly: cookie.hostOnly === null ? undefined : cookie.hostOnly,
-        sameSite: t2pSameSite(cookie.sameSite),
+            toughCookie.expires.getTime(),
+        secure: toughCookie.secure,
+        httpOnly: toughCookie.hostOnly === null ? undefined : toughCookie.hostOnly,
+        sameSite: t2pSameSite(toughCookie.sameSite),
     }
+
+    return puppetCookie;
 }

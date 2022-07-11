@@ -57,7 +57,7 @@ export class PuppeteerToughCookieStore implements Store {
         const { cookies } = await this.client.send("Network.getCookies", {
             urls: ['https://' + domain + (path || '')]
         })
-        return cookies;
+        return cookies.filter(cookie => cookie.name !== "");
     }
 
     /**
@@ -82,6 +82,7 @@ export class PuppeteerToughCookieStore implements Store {
      * Sets a cookie with the given cookie data; may overwrite equivalent cookies if they exist.
      */
     async putCookie(cookie: Cookie): Promise<void> {
+        if (cookie.key === '') return;
         await this.client.send("Network.setCookie", serializeForPuppeteer(cookie))
     };
 
