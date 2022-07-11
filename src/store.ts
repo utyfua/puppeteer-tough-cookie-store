@@ -1,4 +1,4 @@
-import type { Cookie } from 'tough-cookie'
+import type { Cookie, Store } from 'tough-cookie'
 import type { CDPSession, Protocol } from 'puppeteer'
 
 // @ts-ignore
@@ -33,11 +33,11 @@ export interface StoreOptions {
 /**
  * @class PuppeteerToughCookieStore
  */
-export class PuppeteerToughCookieStore {
+export class PuppeteerToughCookieStore implements Store {
     /**
      * Current store driver works async only
      */
-    protected synchronous = false;
+    public synchronous = false;
 
     constructor(
         /** @internal */
