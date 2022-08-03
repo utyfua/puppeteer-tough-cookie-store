@@ -1,6 +1,6 @@
 {
   "name": "puppeteer-tough-cookie-store",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Puppeteer cookie store implementation for tough-cookie",
   "repository": "utyfua/puppeteer-tough-cookie-store",
   "typings": "dist/index.d.ts",
@@ -35,8 +35,12 @@
   "author": "Utyfua",
   "license": "MIT",
   "peerDependencies": {
-    "tough-cookie": "*",
-    "universalify": "*"
+    "tough-cookie": "*"
+  },
+  "peerDependenciesMeta": {
+    "tough-cookie": {
+      "optional": true
+    }
   },
   "devDependencies": {
     "@babel/preset-typescript": "^7.15.0",
@@ -51,12 +55,12 @@
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-sourcemaps": "^0.6.3",
     "rollup-plugin-typescript2": "^0.30.0",
-    "tough-cookie": "^4.0.0",
     "ts-node": "^10.4.0",
     "typedoc": "^0.23.6",
     "typescript": "^4.7.4"
   },
   "dependencies": {
+    "tough-cookie": "^4.0.0",
     "universalify": "^2.0.0"
   }
 }
