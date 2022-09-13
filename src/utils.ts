@@ -43,7 +43,6 @@ export const serializeForTough = (puppetCookie: Protocol.Network.Cookie): Cookie
     const toughCookie: Cookie = new Cookie({
         key: puppetCookie.name,
         value: puppetCookie.value,
-        // @ts-ignore: Infinity expires: https://github.com/DefinitelyTyped/DefinitelyTyped/pull/59406
         expires: (!puppetCookie.expires || puppetCookie.expires === PuppeteerInfinityExpires) ?
             ToughInfinityExpires :
             new Date(puppetCookie.expires * 1000),

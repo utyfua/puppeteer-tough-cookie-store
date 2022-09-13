@@ -1,7 +1,6 @@
 import type { Cookie, Store } from 'tough-cookie'
 import type { CDPSession, Protocol } from 'puppeteer'
 
-// @ts-ignore
 import { fromPromise } from 'universalify'
 
 import { serializeForTough, serializeForPuppeteer } from './utils'
