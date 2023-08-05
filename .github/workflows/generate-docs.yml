@@ -2,7 +2,12 @@ name: Generate docs on merge
 "on":
   push:
     branches:
-      - docs
+      - master
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
 
 jobs:
   build:
@@ -17,10 +22,12 @@ jobs:
         run: yarn
       - name: 'Generate docs files'
         run: yarn docs
-      - name: 'Commit docs'
-        run: |
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-          git add .
-          git commit -m "Generate docs"
-          git push
+      - name: Setup Pages
+        uses: actions/configure-pages@v3
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: 'docs'
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2
