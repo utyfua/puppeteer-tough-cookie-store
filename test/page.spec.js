@@ -1,4 +1,5 @@
-const { default: puppeteer } = require('puppeteer');
+const puppeteerModule = require('puppeteer');
+const puppeteer = puppeteerModule.default || puppeteerModule.puppeteer || puppeteerModule;
 const { CookieJar } = require('tough-cookie');
 const { getStoreByPage } = require('../');
 
