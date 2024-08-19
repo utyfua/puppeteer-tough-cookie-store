@@ -15,7 +15,6 @@
     "prebuild": "rimraf dist/*",
     "build": "rollup -c",
     "docs": "typedoc src/* --cleanOutputDir --name \"Puppeteer cookie store implementation for tough-cookie\"",
-    "pretest": "npm run build",
     "test": "jest"
   },
   "keywords": [
