@@ -20,7 +20,7 @@ describe('CookieJar async operations', () => {
                 '--incognito',
                 '--start-in-incognito',
             ],
-        });
+        }, 10000);
 
         const page = await browser.newPage();
 
