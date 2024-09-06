@@ -8,7 +8,7 @@ const got = require('got'); // make sure its got@11, cuz got@12 forcing to using
 
 async function getPage() {
     // launch some browser
-    let browser = await puppeteer.launch({
+    const browser = await puppeteer.launch({
         headless: false,
         args: [
             '--incognito',
@@ -16,8 +16,7 @@ async function getPage() {
         ],
     });
 
-    const context = await browser.createIncognitoBrowserContext();
-    const page = await context.newPage();
+    const page = await browser.newPage();
 
     return [browser, page];
 }
