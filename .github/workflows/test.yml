@@ -14,8 +14,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        nodeVersion: [16, 18, 20, 22]
-        puppeteerVersion: [13, 14, 15, 16, 17, 18, 19, 22, 23, latest]
+        nodeVersion: [18, 20, 22]
+        puppeteerVersion: [13, 14, 15, 16, 17, 18, 19, 22, 23, 24, latest]
       fail-fast: false
     steps:
       - uses: actions/checkout@v4

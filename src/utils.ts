@@ -4,10 +4,12 @@ import type { Protocol } from 'puppeteer'
 export const PuppeteerInfinityExpires = -1;
 export const ToughInfinityExpires = "Infinity";
 
+export type SameSite = 'lax' | 'strict' | 'none';
+
 /**
  * convert puppeteer's sameSite to tough-cookie's sameSite
  */
-export const p2tSameSite = (sameSite?: Protocol.Network.CookieSameSite): Cookie.Properties["sameSite"] => {
+export const p2tSameSite = (sameSite?: Protocol.Network.CookieSameSite): SameSite => {
     switch (sameSite) {
         case 'Lax':
             return 'lax';
@@ -22,7 +24,7 @@ export const p2tSameSite = (sameSite?: Protocol.Network.CookieSameSite): Cookie.
 /**
  * convert tough-cookie's sameSite to puppeteer's sameSite
  */
-export const t2pSameSite = (sameSite?: Cookie.Properties["sameSite"]): Protocol.Network.CookieSameSite => {
+export const t2pSameSite = (sameSite?: string): Protocol.Network.CookieSameSite => {
     sameSite = sameSite ? sameSite.toLocaleLowerCase() : 'none'
     switch (sameSite) {
         case 'lax':

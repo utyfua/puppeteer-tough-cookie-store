@@ -19,6 +19,8 @@ describe('CookieJar async operations', () => {
             args: [
                 '--incognito',
                 '--start-in-incognito',
+                '--no-sandbox',
+                '--disable-setuid-sandbox',
             ],
         }, 10000);
 

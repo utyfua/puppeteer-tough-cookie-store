@@ -1,6 +1,6 @@
 {
   "name": "puppeteer-tough-cookie-store",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Puppeteer cookie store implementation for tough-cookie",
   "repository": "utyfua/puppeteer-tough-cookie-store",
   "typings": "dist/index.d.ts",
@@ -12,10 +12,10 @@
     "README.md"
   ],
   "scripts": {
-    "prebuild": "rimraf dist/*",
+    "prebuild": "rimraf -g dist/*",
     "build": "rollup -c",
     "docs": "typedoc src/* --cleanOutputDir --name \"Puppeteer cookie store implementation for tough-cookie\"",
-    "test": "jest"
+    "test": "jest --forceExit --testTimeout=10000"
   },
   "keywords": [
     "puppeteer",
@@ -32,7 +32,7 @@
   "author": "Utyfua",
   "license": "MIT",
   "peerDependencies": {
-    "tough-cookie": "*"
+    "tough-cookie": "^4 || ^5"
   },
   "peerDependenciesMeta": {
     "tough-cookie": {
@@ -49,15 +49,15 @@
     "@types/universalify": "^1.0.3",
     "got": "^11.8.5",
     "jest": "^29.7.0",
-    "puppeteer": "^23.1.0",
+    "puppeteer": "^24.2.1",
     "rimraf": "^6.0.1",
     "rollup": "^4.21.0",
     "tslib": "^2.6.3",
-    "typedoc": "^0.26.6",
-    "typescript": "^5.5.4"
+    "typedoc": "0.27.7",
+    "typescript": "5.6.3"
   },
   "dependencies": {
-    "tough-cookie": "*",
+    "tough-cookie": "^5.1.1",
     "universalify": "^2.0.0"
   }
 }

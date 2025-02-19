@@ -6,7 +6,7 @@ import { fromPromise } from 'universalify'
 import { serializeForTough, serializeForPuppeteer } from './utils'
 
 /**
- * Options for [PuppeteerToughCookieStore](../classes/PuppeteerToughCookieStore.html)
+ * Options for `PuppeteerToughCookieStore`
  */
 export interface StoreOptions {
     /**
@@ -62,10 +62,10 @@ export class PuppeteerToughCookieStore implements Store {
     /**
      * Returns cookie for the specific domain and path
      */
-    async findCookie(domain: string, path: string, key: string): Promise<Cookie | null> {
+    async findCookie(domain: string, path: string, key: string): Promise<Cookie | undefined> {
         const cookies = await this.findCdpCookies(domain, path);
         const cookie = cookies.find(({ name }) => name === key);
-        return cookie ? serializeForTough(cookie) : null;
+        return cookie ? serializeForTough(cookie) : undefined;
     };
 
     /**
