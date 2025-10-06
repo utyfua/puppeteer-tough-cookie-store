@@ -25,9 +25,7 @@ export const p2tSameSite = (sameSite?: Protocol.Network.CookieSameSite): SameSit
  * convert tough-cookie's sameSite to puppeteer's sameSite
  */
 export const t2pSameSite = (sameSite?: string): Protocol.Network.CookieSameSite => {
-    if (!sameSite) return 'Lax'; // default behavior for compatibility
-    
-    switch (sameSite.toLowerCase()) {
+    switch (sameSite?.toLowerCase()) {
         case 'lax':
             return 'Lax';
         case 'strict':

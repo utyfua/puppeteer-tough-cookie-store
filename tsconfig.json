@@ -4,7 +4,12 @@
     "target": "es2017",
     "module": "ESNext",
     "moduleResolution": "node",
-    "lib": ["es2015", "es2016", "es2017", "dom"],
+    "lib": [
+      "es2015",
+      "es2016",
+      "es2017",
+      "dom"
+    ],
     "sourceMap": true,
     "declaration": true,
     "esModuleInterop": true,
@@ -17,10 +22,19 @@
     "noUnusedParameters": false,
     "pretty": true,
     "stripInternal": true,
-    "types": ["node"],
+    "types": [
+      "node"
+    ],
     "strict": true,
-  "experimentalDecorators": true
+    "experimentalDecorators": true
   },
-  "include": ["./src/**/*.tsx", "./src/**/*.ts"],
-  "exclude": ["node_modules", "dist", "./test/**/*.spec.ts"]
+  "include": [
+    "./src/**/*.tsx",
+    "./src/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "./test/**/*.spec.ts"
+  ]
 }
